@@ -37,7 +37,7 @@ def structure():
     print(f"|U°U| \033[0;35m     distro:      %s\033[0;0m" % (distrob)) #purple
     print(f"|   | \033[0;34m     hostname:    %s\033[0;0m" % (hostname)) #blue
     print(f"'U_U' \033[0;36m     kernel:      %s\033[0;0m" % (kernel)) #cyan
-    # print(f"  U   \033[1;32m     terminal:    %s\033[0;0m" % (terminal)) # dont work proprerly
+     print(f"  U" ) # dont work proprerly ## code from before i gave up the terminal detection:  \033[1;32m     terminal:    %s\033[0;0m" % (terminal)
     # terminal => os.ctermid()
 
 
