@@ -14,16 +14,17 @@ uptime=time.clock_gettime(time.CLOCK_BOOTTIME)
 up=str(datetime.timedelta(seconds=uptime)) # 0:00:00.000000
 
 # hostname
-host = open("/etc/hostname", "r")
-hostname = host.read()
-hostname = hostname.strip()
+with open("/etc/hostname", "r") as host:
+    # With blocks ensure that the file will get closed
+    hostname = host.read()
+    hostname = hostname.strip()
 
 # distro
-distro = open("/etc/issue", "r")
-distrob = distro.read()
-distrob = distrob.strip()
-distrob = distrob.replace("(\l)","")
-distrob = distrob.replace("\\r","")
+with open("/etc/issue", "r") as distro:
+    distrob = distro.read()
+    distrob = distrob.strip()
+    distrob = distrob.replace("(\l)","")
+    distrob = distrob.replace("\\r","")
 
 # kernel
 kernel = platform.release()
@@ -37,7 +38,7 @@ def structure():
     print(f"|U°U| \033[0;35m     distro:      %s\033[0;0m" % (distrob)) #purple
     print(f"|   | \033[0;34m     hostname:    %s\033[0;0m" % (hostname)) #blue
     print(f"'U_U' \033[0;36m     kernel:      %s\033[0;0m" % (kernel)) #cyan
-     print(f"  U" ) # dont work proprerly ## code from before i gave up the terminal detection:  \033[1;32m     terminal:    %s\033[0;0m" % (terminal)
+    print(f"  U" ) # dont work proprerly ## code from before i gave up the terminal detection:  \033[1;32m     terminal:    %s\033[0;0m" % (terminal)
     # terminal => os.ctermid()
 
 
