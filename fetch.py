@@ -1,3 +1,4 @@
+#!usr/bin/python3
 # -- welcome to this bloated mess --
 
 import time 
