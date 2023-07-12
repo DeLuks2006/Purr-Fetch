@@ -17,7 +17,7 @@
 * change into the cloned directory - `cd Purr-Fetch`
 * run the fetch.py - `python fetch.py` OR `./fetch.py`
 
-**for the rust version:**
+**for the rust (less bloated and faster) version:**
 * install rustc with your package manager - `pacman -S rust` in case of Arch Linux
 * clone this repo
 * change into the cloned directory - `cd Purr-Fetch`
