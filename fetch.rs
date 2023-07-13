@@ -25,10 +25,17 @@ fn main() {
     let mut file = File::open("/etc/issue").unwrap();
     let mut distro = String::new();
     file.read_to_string(&mut distro).unwrap(); //.strip()
-    let distro = distro.replace("(\\l)", "").replace("\r", "").replace("\n", "");
+    let distro = distro.replacen("(\\l)", "", 3).replace("\r", "").replace("\n", "");
 
-    let kernel = std::env::consts::OS; // this is not the full kernel text, it only displays "linux" instead of for example "Linux 5.15.90.1-microsoft-standard-WSL2"
-
+    let mut file = File::open("/proc/sys/kernel/ostype").unwrap(); // Read OS Type (should be "Linux")
+    let mut ostype = String::new();
+    file.read_to_string(&mut ostype).unwrap();
+    let mut file = File::open("/proc/sys/kernel/osrelease").unwrap(); // Read OS Release (should be the kernel version)
+    let mut osrelease = String::new();
+    file.read_to_string(&mut osrelease).unwrap();
+    let kernel = format!("{} {}", ostype.replace("\n", ""), osrelease.replace("\n", ""));
+    
+    
     // probably a bit more involved
     // # terminal = os.ctermid()
 
