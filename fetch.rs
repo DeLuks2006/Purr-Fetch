@@ -2,20 +2,20 @@
 
 use std::fs::File;
 use std::io::prelude::*;
-use std::time::{SystemTime, UNIX_EPOCH};
 
 fn main() {
     let shell = std::env::var("SHELL").unwrap();
 
-    let start = SystemTime::now();
-    let since_the_epoch = start
-        .duration_since(UNIX_EPOCH)
-        .expect("Time went backwards");
-
-    // println!("{:?}", since_the_epoch);
-    let uptime = format!("{since_the_epoch:?}"); // I dunno what exactly we want
-    // uptime=time.clock_gettime(time.CLOCK_BOOTTIME)
-    // up=str(datetime.timedelta(seconds=uptime)) # 0:00:00.000000
+    // Please simplify this code, im fucking bad at rust
+    // but atleast the uptime is correct now :p
+    let mut upfile = File::open("/proc/uptime").unwrap(); // Read uptime from /proc/uptime (idk if this is in all distros but i guess so
+    let mut uptime = String::new();
+    upfile.read_to_string(&mut uptime).unwrap(); // Put uptime file text into uptime variable
+    let v: Vec<&str> = uptime.split(" ").collect(); // Split uptime, because it has more than just the seconds
+    let upsecs = v[0].parse::<f32>().unwrap(); // Parse floating number from index 0, cuz we need that to "beautify" it
+    let secs = upsecs % 60.0; // calculate the seconds
+    let mins = (upsecs / 60.0) % 60.0; // calculate the minutes
+    let uptime = format!("{mins:.0}m {secs:.1}s"); // mak it butiful
 
     let mut file = File::open("/etc/hostname").unwrap();
     let mut hostname = String::new();
@@ -27,7 +27,7 @@ fn main() {
     file.read_to_string(&mut distro).unwrap(); //.strip()
     let distro = distro.replace("(\\l)", "").replace("\r", "").replace("\n", "");
 
-    let kernel = std::env::consts::OS;
+    let kernel = std::env::consts::OS; // this is not the full kernel text, it only displays "linux" instead of for example "Linux 5.15.90.1-microsoft-standard-WSL2"
 
     // probably a bit more involved
     // # terminal = os.ctermid()
