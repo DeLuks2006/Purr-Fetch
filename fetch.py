@@ -12,7 +12,8 @@ with open("/proc/uptime", "r") as uptime:
     secs = time % 60
     mins = (time / 60) % 60
     hours = ((time / 60) / 60) % 24
-    uptime = "%.0fh %.0fm %.1fs" % (hours, mins, secs)
+    days = ((time / 60) / 60) / 24
+    uptime = "%.0fd %.0fh %.0fm %02.1fs" % (hours, mins, secs)
 
 # hostname
 with open("/etc/hostname", "r") as host:
