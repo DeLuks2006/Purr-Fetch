@@ -21,7 +21,7 @@ with open("/etc/hostname", "r") as host:
 
 # distro
 with open("/etc/issue", "r") as distro:
-    distrob = distro.read().strip().replace("(\\l)", "").replace("\r", "")
+    distrob = distro.read().strip().replace("(\\l)", "").replace("\r", "").replace("\n", "")
 
 # kernel
 with open("/proc/sys/kernel/ostype", "r") as ostype:
