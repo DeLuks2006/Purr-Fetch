@@ -2,6 +2,7 @@
 # -- welcome to this bloated mess --
 
 from os import environ
+from math import ceil
 
 # shell
 shell = environ['SHELL']  # /bin/bash
@@ -10,10 +11,10 @@ shell = environ['SHELL']  # /bin/bash
 with open("/proc/uptime", "r") as uptime:
     time = float(uptime.read().split(" ")[0])
     secs = time % 60
-    mins = (time / 60) % 60
-    hours = ((time / 60) / 60) % 24
-    days = ((time / 60) / 60) / 24
-    uptime = "%.0fd %.0fh %.0fm %02.1fs" % (hours, mins, secs)
+    mins = ceil((time / 60) % 60)
+    hours = ceil(((time / 60) / 60) % 24)
+    days = ceil(((time / 60) / 60) / 24)
+    uptime = "%.0fd %.0fh %.0fm %02.1fs" % (days, hours, mins, secs)
 
 # hostname
 with open("/etc/hostname", "r") as host:
