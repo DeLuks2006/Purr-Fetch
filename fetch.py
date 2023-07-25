@@ -26,11 +26,6 @@ with open("/proc/sys/kernel/ostype", "r") as ostype:
     with open("/proc/sys/kernel/osrelease", "r") as osrelease:
         kernel = ostype.read().replace("\n", " ") + osrelease.read().replace("\n", "")
 
-
-# terminal
-# terminal = os.ctermid()
-# code from before i gave up the terminal detection:  \033[1;32m     terminal:    %s\033[0;0m" % (terminal)
-
 def structure():
     print()
     print("(\\_/) \033[0;33m     uptime:      %s\033[0;0m" % (uptime))  # orange
