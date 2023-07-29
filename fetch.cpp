@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <cstdlib>
+#include <unistd.h>
 using std::string;
 using std::ifstream;
 
@@ -56,3 +57,13 @@ string getDistro()
 	return "";
 }
 
+string getHostname()
+{
+	char hostname[50];
+	int status = gethostname(hostname, sizeof(hostname));
+	if (status == 0)
+	{
+		return hostname;
+	}
+	return "";
+}
