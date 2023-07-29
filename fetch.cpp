@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cstdlib>
 using std::string;
 
 double getUptime();
@@ -24,5 +25,11 @@ double getUptime()
 		return uptimeSeconds;
 	}
 	return -1;
+}
+
+string getShell()
+{
+	string shell = getenv("SHELL");
+	return shell;
 }
 
