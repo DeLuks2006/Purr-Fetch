@@ -1,13 +1,14 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+using std::string;
 
 double getUptime();
 // Returns uptime in seconds
-std::string getShell();
-std::string getDistro();
-std::string getHostname();
-std::string getKernel();
+string getShell();
+string getDistro();
+string getHostname();
+string getKernel();
 void display();
 
 int main()
@@ -24,3 +25,4 @@ double getUptime()
 	}
 	return -1;
 }
+
