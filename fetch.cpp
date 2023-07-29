@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cstdlib>
 using std::string;
+using std::ifstream;
 
 double getUptime();
 // Returns uptime in seconds
@@ -20,7 +21,7 @@ int main()
 double getUptime()
 {
 	double uptimeSeconds;
-	if (std::ifstream("/proc/uptime") >> uptimeSeconds)
+	if (ifstream("/proc/uptime") >> uptimeSeconds)
 	{
 		return uptimeSeconds;
 	}
