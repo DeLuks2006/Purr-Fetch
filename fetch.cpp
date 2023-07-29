@@ -34,3 +34,25 @@ string getShell()
 	return shell;
 }
 
+string getDistro()
+{
+	ifstream inputStream;
+	string text;
+	string distro;
+	string::size_type startPosition;
+	string::size_type endPosition;
+
+	inputStream.open("/etc/os-release");
+	while (inputStream >> text)
+	{
+		if (text.find("PRETTY_NAME") != string::npos)
+		{
+			startPosition = text.find("\"") + 1;
+			endPosition = text.find("\"", startPosition);
+			distro = text.substr(startPosition, endPosition - startPosition);
+			return distro;
+		}
+	}
+	return "";
+}
+
