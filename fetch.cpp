@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <unistd.h>
+#include <sys/utsname.h>
 using std::string;
 using std::ifstream;
 
@@ -66,4 +67,11 @@ string getHostname()
 		return hostname;
 	}
 	return "";
+}
+
+string getKernel()
+{
+	struct utsname osInfo{};
+	uname(&osInfo);
+	return static_cast<string>(osInfo.sysname) + " " + static_cast<string>(osInfo.release);
 }
