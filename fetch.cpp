@@ -6,6 +6,9 @@
 #include <sys/utsname.h>
 using std::string;
 using std::ifstream;
+using std::cout;
+using std::endl;
+using std::to_string;
 
 struct Uptime
 {
@@ -25,6 +28,7 @@ void display();
 
 int main()
 {
+	display();
 	return 0;
 }
 
@@ -96,3 +100,40 @@ string getKernel()
 	return static_cast<string>(osInfo.sysname) + " " + static_cast<string>(osInfo.release);
 }
 
+void display()
+{
+	Uptime uptime = getUptime();
+	string uptimeString = "";
+	if (uptime.days > 0)
+	{
+		uptimeString += to_string(uptime.days) + " days, ";
+	}
+	if (uptime.hours > 0)
+	{
+		uptimeString += to_string(uptime.hours) + "h ";
+	}
+	if (uptime.minutes > 0)
+	{
+		uptimeString += to_string(uptime.minutes) + "m ";
+	}
+	if (uptime.seconds > 0)
+	{
+		uptimeString += to_string(uptime.seconds) + "s";
+	}
+
+	string shell = getShell();
+	string distro = getDistro();
+	string hostname = getHostname();
+	string kernel = getKernel();
+
+	string white = "\033[0;0m";
+
+	cout << endl;
+	cout << "(\\_/)      \033[0;33m" << "uptime:\t" << uptimeString << white << endl;
+	cout << "(oᴥo)      \033[0;31m" << "shell:\t" << shell << white << endl;
+	cout << "|U°U|      \033[0;35m" << "distro:\t" << distro << white << endl;
+	cout << "|   |      \033[0;34m" << "hostname:\t" << hostname << white << endl;
+	cout << "'U_U'      \033[0;36m" << "kernel:\t" << kernel << white << endl;
+	cout << "  U";
+	cout << endl;
+}
