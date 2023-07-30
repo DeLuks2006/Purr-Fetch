@@ -1,6 +1,6 @@
 #  Purr-fetch
 ## A System fetching tool written in python. 
-### ( and now also an alternative version written in rust and C++ by friendly contributors!! )
+### ( and now also alternative versions written in rust and C++ by friendly contributors!! )
 ![](https://github.com/DeLuks2006/Purr-Fetch/blob/main/Screen-from-WSL.png)
 
 **What is this?:** Purr-Fetch is a command-line information tool written in Python, that displays various information about your system! It's main use case is to be used in screenshots so it looks pretty but you may also just use it to get your system information. 👍
