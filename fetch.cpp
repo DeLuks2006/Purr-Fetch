@@ -24,6 +24,7 @@ string getShell();
 string getDistro();
 string getHostname();
 string getKernel();
+string buildUptimeString(Uptime uptime);
 void display();
 
 int main()
@@ -100,9 +101,8 @@ string getKernel()
 	return static_cast<string>(osInfo.sysname) + " " + static_cast<string>(osInfo.release);
 }
 
-void display()
+string buildUptimeString(Uptime uptime)
 {
-	Uptime uptime = getUptime();
 	string uptimeString = "";
 	if (uptime.days > 0)
 	{
@@ -120,7 +120,13 @@ void display()
 	{
 		uptimeString += to_string(uptime.seconds) + "s";
 	}
+	return uptimeString;
+}
 
+void display()
+{
+	Uptime uptime = getUptime();
+	string uptimeString = buildUptimeString(uptime);
 	string shell = getShell();
 	string distro = getDistro();
 	string hostname = getHostname();
