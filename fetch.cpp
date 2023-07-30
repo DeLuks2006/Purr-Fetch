@@ -7,8 +7,16 @@
 using std::string;
 using std::ifstream;
 
-double getUptime();
-// Returns uptime in seconds
+struct Uptime
+{
+	int days = 0;
+	int hours = 0;
+	int minutes = 0;
+	int seconds = 0;
+};
+
+Uptime getUptime();
+// Returns an Uptime object
 string getShell();
 string getDistro();
 string getHostname();
@@ -20,14 +28,26 @@ int main()
 	return 0;
 }
 
-double getUptime()
+Uptime getUptime()
 {
-	double uptimeSeconds;
+	const int DAY_IN_SECONDS = 86400;
+	const int HOUR_IN_SECONDS = 3600;
+	const int MINUTE_IN_SECONDS = 60;
+
+	long uptimeSeconds;
+	Uptime uptime;
+
 	if (ifstream("/proc/uptime") >> uptimeSeconds)
 	{
-		return uptimeSeconds;
+		uptime.days = uptimeSeconds / DAY_IN_SECONDS;
+		uptimeSeconds = uptimeSeconds % DAY_IN_SECONDS;
+		uptime.hours = uptimeSeconds / HOUR_IN_SECONDS;
+		uptimeSeconds = uptimeSeconds % HOUR_IN_SECONDS;
+		uptime.minutes = uptimeSeconds / MINUTE_IN_SECONDS;
+		uptimeSeconds = uptimeSeconds % MINUTE_IN_SECONDS;
+		uptime.seconds = uptimeSeconds;
 	}
-	return -1;
+	return uptime;
 }
 
 string getShell()
@@ -75,3 +95,4 @@ string getKernel()
 	uname(&osInfo);
 	return static_cast<string>(osInfo.sysname) + " " + static_cast<string>(osInfo.release);
 }
+
