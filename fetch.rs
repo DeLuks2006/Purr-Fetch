@@ -14,8 +14,11 @@ fn main() {
     let v: Vec<&str> = uptime.split(" ").collect(); // Split uptime, because it has more than just the seconds
     let upsecs = v[0].parse::<f32>().unwrap(); // Parse floating number from index 0, cuz we need that to "beautify" it
     let secs = upsecs % 60.0; // calculate the seconds
-    let mins = (upsecs / 60.0) % 60.0; // calculate the minutes
-    let uptime = format!("{mins:.0}m {secs:.1}s"); // mak it butiful
+    let upsecs = upsecs as i64; // convert to integer to avoid unnecessary rounding of float value
+    let mins = (upsecs / 60) % 60; // calculate the minutes
+    let hours = (upsecs / 3600) % 24; // calculate the hours
+    let days = upsecs / (3600 * 24); // calculate the days
+    let uptime = format!("{days:.0} days, {hours:.0}h {mins:.0}m {secs:.1}s"); // mak it butiful
 
     let mut file = File::open("/etc/hostname").unwrap();
     let mut hostname = String::new();
