@@ -25,20 +25,13 @@
 
 **For the C++ version:**
 
-Compile ``fetch.cpp`` with a compiler of your choice with C++11 standard or later.
-Example using ``g++``:
-```bash
-g++ fetch.cpp -o fetch
-```
-Running the compiled script:
-```bash
-./fetch
-```
+- Compile `fetch.cpp` with a compiler of your choice with C++11 standard or later.
+  Example using `g++`: `g++ fetch.cpp -o fetch`
+- Running the compiled script:
+  `./fetch`
 
 ### Known issues:
-- bloated <-- will be fixed soon
 - missing features (terminal detection) <-- idk how to do it, please be patient while I figure it out.
-- slow <-- rewrite in C is planned
 
 ### How to contribute:
 
