@@ -10,7 +10,12 @@ shell = environ['SHELL']  # /bin/bash
 # uptime
 with open("/proc/uptime", "r") as uptime:
     time = float(uptime.read().split(" ")[0])
-    uptime = timedelta(seconds=time)
+    secs = time % 60.0
+    time = int(time)
+    mins = (time / 60) % 60
+    hours = (time / 3600) % 24
+    days = time / 86400
+    uptime = f"{days:.0f} days, {hours:.0f}h {mins:.0f}m {secs:.1f}s"
 
 # hostname
 with open("/etc/hostname", "r") as host:
