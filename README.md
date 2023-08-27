@@ -32,6 +32,8 @@
 
 ### Known issues:
 - missing features (terminal detection) <-- idk how to do it, please be patient while I figure it out.
+- broken kernel release in the C version
+- missing formatting for uptime in C version
 
 ### How to contribute:
 
