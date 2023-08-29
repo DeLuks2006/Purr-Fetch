@@ -30,6 +30,11 @@
 - Running the compiled script:
   `./fetch`
 
+**For the Java version (more bloated and slower):**
+
+- Install default-jre with your package manager.
+- Run the fetch.java file with Java.
+
 ### Known issues:
 - missing features (terminal detection) <-- idk how to do it, please be patient while I figure it out.
 - broken kernel release in the C version
