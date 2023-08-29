@@ -30,10 +30,14 @@ public class SystemInfo {
             reader.close();
             String[] parts = line.split(" ");
             double uptimeSeconds = Double.parseDouble(parts[0]);
-            int hours = (int) uptimeSeconds / 3600;
+
+            int days = (int) uptimeSeconds / 86400;
+            int hours = (int) (uptimeSeconds % 86400) / 3600;
             int minutes = (int) (uptimeSeconds % 3600) / 60;
             int seconds = (int) uptimeSeconds % 60;
-            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            int milliseconds = (int) ((uptimeSeconds - Math.floor(uptimeSeconds)) * 1000);
+
+            return String.format("%d Days, %dh %dm %ds.%d", days, hours, minutes, seconds, milliseconds);
         } catch (IOException e) {
             e.printStackTrace();
             return "";
@@ -45,7 +49,7 @@ public class SystemInfo {
             BufferedReader reader = new BufferedReader(new FileReader("/etc/issue"));
             String distro = reader.readLine();
             reader.close();
-            return distro.replace("\\n", "").replace("\\l", ""); // Somehow the file contains a \n and a \l at the end, I don't know why though, and don't care. At least in the Ubuntu-WSL.
+            return distro.replace("\\n", "").replace("\\l", "").replace("\\r", "").replace("()", ""); // Somehow the file contains certain characters in certain distros.
         } catch (IOException e) {
             e.printStackTrace();
             return "";
