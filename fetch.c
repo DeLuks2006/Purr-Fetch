@@ -9,24 +9,24 @@
 // ascii art 0
 
 
-void display();
-const char* uptime();
-const char* shell();
-const char* distro();
-const char* hostname();
-const char* kernel();
+void display(void);
+const char* uptime(void);
+const char* shell(void);
+const char* distro(void);
+const char* hostname(void);
+const char* kernel(void);
 
-int main(){
+int main(void){
   display();
   return 0;
 }
-const char* shell(){
+const char* shell(void){
   const char* shell = getenv("SHELL"); 
   return shell;
 }
 
 
-const char* uptime(){
+const char* uptime(void){
   static char sTime[300];
   FILE *fptr = fopen("/proc/uptime", "r");
   
@@ -40,7 +40,7 @@ const char* uptime(){
   return sTime;
 }
 
-const char* distro(){
+const char* distro(void){
   static char sDistro[100];
   FILE *fptr = fopen("/etc/issue", "r");
 
@@ -52,7 +52,7 @@ const char* distro(){
   fclose(fptr);
   return sDistro;
 }
-const char* hostname(){
+const char* hostname(void){
   static char sHost[50];
   int status = gethostname(sHost, sizeof(sHost));
   if (status == 0){
@@ -61,7 +61,7 @@ const char* hostname(){
   return "";
 }
 
-const char* kernel(){
+const char* kernel(void){
   struct utsname buffer;
   if (uname(&buffer) == 0){
     return strdup(buffer.release);
@@ -72,7 +72,7 @@ const char* kernel(){
 
 
 
-void display(){
+void display(void){
   printf("(\\_/)\t\033[0;33m uptime: %s\n\033[0;0m", uptime());// uptime  - orange
   printf("(oᴥo)\t\033[0;31m shell: %s\n\033[0;0m", shell()); // shell   - red
   printf("|U°U|\t\033[0;35m distro: %s\n\033[0;0m", distro()); // distro  - purple
