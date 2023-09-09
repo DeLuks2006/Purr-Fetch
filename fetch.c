@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/utsname.h>
@@ -63,7 +64,7 @@ const char* hostname(){
 const char* kernel(){
   struct utsname buffer;
   if (uname(&buffer) == 0){
-    return buffer.release;
+    return strdup(buffer.release);
   } else {
     return "";
   }
