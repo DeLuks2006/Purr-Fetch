@@ -1,3 +1,4 @@
+//bin/true && exec /usr/bin/env tcc -run "$0"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
