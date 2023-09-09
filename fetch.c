@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <sys/utsname.h>
 #include <string.h>
+#include <sys/sysinfo.h>
 
 // hostname 4 - read file /etc/hostname
 // kernel 5 - read file or osInfo.sysname 
@@ -11,7 +12,7 @@
 
 
 void display(void);
-const char* uptime(void);
+const long uptime(void);
 const char* shell(void);
 const char* distro(void);
 const char* hostname(void);
@@ -27,18 +28,13 @@ const char* shell(void){
 }
 
 
-const char* uptime(void){
-  static char sTime[300];
-  FILE *fptr = fopen("/proc/uptime", "r");
-  
-  if (fptr == NULL){
-    printf("Error opening file :(\n");
-    exit(1); // exit if file pointer returns NULL
+const long uptime(void){
+  struct sysinfo sysinfo_struct;
+  if(sysinfo(&sysinfo_struct)) {
+    perror("sysinfo (for uptime)");
+    exit(1);
   }
-
-  fscanf(fptr,"%s", sTime);
-  fclose(fptr);
-  return sTime;
+  return sysinfo_struct.uptime;
 }
 
 const char* distro(void){
@@ -74,7 +70,7 @@ const char* kernel(void){
 
 
 void display(void){
-  printf("(\\_/)\t\033[0;33m uptime: %s\n\033[0;0m", uptime());// uptime  - orange
+  printf("(\\_/)\t\033[0;33m uptime: %li\n\033[0;0m", uptime());// uptime  - orange
   printf("(oᴥo)\t\033[0;31m shell: %s\n\033[0;0m", shell()); // shell   - red
   printf("|U°U|\t\033[0;35m distro: %s\n\033[0;0m", distro()); // distro  - purple
   printf("|   |\t\033[0;34m hostname: %s\n\033[0;0m", hostname()); // host    - blue
