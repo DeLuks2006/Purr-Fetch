@@ -35,6 +35,13 @@
 - Install default-jre with your package manager.
 - Run the fetch.java file with Java.
 
+**For the C version:**
+
+- clone this repository
+- change into the cloned directory
+- compile the `fetch.c` file - `gcc -o fetch.c fetch.o`
+- run the fetch with `./fetch.o`
+
 ### Known issues:
 - missing features (terminal detection) <-- idk how to do it, please be patient while I figure it out.
 - missing formatting for uptime in C version
@@ -42,5 +49,5 @@
 ### How to contribute:
 
 Just contribute here by fixing my bad and messy code and explaining what I did wrong. XD
-**OR** you may also just add another version of the fetch in an language that is not yet featured (please leave the C version out, im going to do that one XD)
+**OR** you may also just add another version of the fetch in an language that is not yet featured
 Please note that I am a beginner so I may not understand every mistake. 👍
