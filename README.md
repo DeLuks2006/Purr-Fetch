@@ -49,6 +49,12 @@
 - compile the `fetch.hs` file - `ghc fetch.hs`
 - run the fetch with `./fetch`, alternatively compile and run with `runghc fetch.hs`
 
+**For the JS (Bun) version:**
+
+- clone this repository
+- change into the cloned directory
+- run with `bun run fetch.js`
+
 ### Known issues:
 - missing features (terminal detection) <-- idk how to do it, please be patient while I figure it out.
 - missing formatting for uptime in C version
