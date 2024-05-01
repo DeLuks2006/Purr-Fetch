@@ -55,6 +55,12 @@
 - change into the cloned directory
 - run with `bun run fetch.js`
 
+**For the go version:**
+
+- clone this repository
+- change into the cloned directory
+- run with `go run fetch.go`
+
 **For the Bash version**
 
 - clone this repository
