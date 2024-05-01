@@ -61,6 +61,12 @@
 - change into the cloned directory
 - run with `go run fetch.go`
 
+**For the Bash version**
+
+- clone this repository
+- change into the cloned directory
+- run with `./fetch.sh`
+
 ### Known issues:
 - missing features (terminal detection) <-- idk how to do it, please be patient while I figure it out.
 - missing formatting for uptime in C version
