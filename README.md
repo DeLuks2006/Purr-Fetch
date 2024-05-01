@@ -55,6 +55,13 @@
 - change into the cloned directory
 - run with `bun run fetch.js`
 
+**For the make version:**
+
+- clone this repository
+- change into the cloned directory
+- run with `make` or `make fetch`
+- clean with `make clean` when necessary
+
 ### Known issues:
 - missing features (terminal detection) <-- idk how to do it, please be patient while I figure it out.
 - missing formatting for uptime in C version
