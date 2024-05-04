@@ -84,6 +84,13 @@
 - change into the cloned directory
 - run with `node fetch-node.js`
 
+**For the x86-64 version:**
+
+- clone this repository
+- change into the cloned directory
+- compile the `fetch_x86-64.asm` file - `clang fetch_x86-64.asm -o fetch -no-pie`
+- run the fetch with `./fetch`
+
 ### Known issues:
 
 - missing features (terminal detection) <-- idk how to do it, please be patient while I figure it out.
