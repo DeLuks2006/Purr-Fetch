@@ -20,6 +20,9 @@ placeholder_str:
 SHELL:
     .asciz "SHELL"
 
+PRETTY_NAME:
+    .asciz "PRETTY_NAME=\""
+
 space_str:
     .asciz " "
 
@@ -31,6 +34,9 @@ uptime_detail_fmt:
 
 uptime_filepath:
     .asciz "/proc/uptime"
+
+distro_filepath:
+    .asciz "/etc/os-release"
 
 file_permissions:
     .asciz "r"
@@ -75,14 +81,16 @@ get_hostname:
 
 # char* get_kernel()
 get_kernel:
-    mov rdi, 400
+    push rbp
+    mov rbp, rsp
+    sub rsp, 8
+
+    mov rdi, 390
     mov rsi, 1
     call calloc
+    mov [rbp - 8], rax
 
-    push rax
-    push rax
-
-    mov rdi, rax
+    mov rdi, [rbp - 8]
     call uname
     call strlen
 
@@ -92,35 +100,36 @@ get_kernel:
     mov [rdi], rsi
 
     # concatenate utsname::release level after utsname::sysname
-    pop rdi
+    mov rdi, [rbp - 8]
     mov rsi, rdi
     add rsi, 130
     call strcat
 
-    pop rax
+    mov rax, [rbp - 8]
+    add rsp, 8
+    pop rbp
     ret
 
 # char* get_uptime()
 get_uptime:
     push rbp
     mov rbp, rsp
-    sub rsp, 32
+    sub rsp, 48
 
     # allocate fmt buffer
     mov rdi, 64
     mov rsi, 1
     call calloc
-    push rax
-    mov r12, rax
+    mov [rbp - 48], rax
 
     # open /proc/uptime
     lea rdi, [uptime_filepath]
     lea rsi, [file_permissions]
     call fopen
-    push rax
+    mov [rbp - 40], rax
 
     # parse out the number of seconds
-    mov rdi, rax
+    mov rdi, [rbp - 40]
     lea rsi, [seconds_scan_fmt]
     lea rdx, [rbp - 8]
     mov al, 0
@@ -144,7 +153,7 @@ get_uptime:
     mov [rbp - 32], rdx # seconds
 
     # format into HH:MM:SS
-    mov rdi, r12
+    mov rdi, [rbp - 48]
     mov rsi, 64
     lea rdx, [uptime_detail_fmt]
     mov rcx, [rbp - 16]
@@ -153,27 +162,73 @@ get_uptime:
     call snprintf
 
     # close /proc/uptime
-    pop rdi
+    mov rdi, [rbp - 40]
     call fclose
 
-    pop rax
-    add rsp, 32
+    mov rax, [rbp - 48]
+    add rsp, 48
     pop rbp
     ret
 
 # char* get_distro()
 get_distro:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 32
+
+    # allocate read buffer
+    mov rdi, 128
+    mov rsi, 1
+    call calloc
+    mov [rbp - 8], rax
+
+    # allocate name buffer
     mov rdi, 64
     mov rsi, 1
     call calloc
-    push rax
+    mov [rbp - 16], rax
 
-    mov rdi, rax
-    lea rsi, [placeholder_str]
-    mov rcx, 13
-    call memcpy 
+    # open /etc/issue
+    lea rdi, [distro_filepath]
+    lea rsi, [file_permissions]
+    call fopen
+    mov [rbp - 24], rax
 
-    pop rax
+    # parse out the distro name string
+    mov rdi, [rbp - 8]
+    mov rsi, 128
+    mov rdx, 1
+    mov rcx, [rbp - 24]
+    call fread
+
+    mov rdi, [rbp - 8]
+    lea rsi, [PRETTY_NAME]
+    call strstr
+    add rax, 13
+    mov [rbp - 32], rax
+
+    mov rdi, [rbp - 32]
+    mov rsi, '"'
+    call strchr
+
+    sub rax, [rbp - 32]
+
+    mov rdi, [rbp - 16]
+    mov rsi, [rbp - 32]
+    mov rdx, rax
+    call memcpy
+
+    # close /etc/issue
+    mov rdi, [rbp - 24]
+    call fclose
+
+    # free read buffer
+    mov rdi, [rbp - 8]
+    call free
+
+    mov rax, [rbp - 16]
+    add rsp, 32
+    pop rbp
     ret
 
 # void print_fetched(char* uptime, char* shell, char* distro, char* hostname, char* kernel)
